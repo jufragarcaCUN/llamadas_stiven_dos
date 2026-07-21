@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Análisis UX · CUN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Montserrat', sans-serif;
+            background: #eef3f9;
+            color: #0b1a2e;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #0b1a2e;
+            color: #d4e2f0;
+            padding: 1.8rem 1.2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 4px 0 20px rgba(0, 20, 40, 0.08);
+            z-index: 100;
+        }
+
+        .sidebar h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #b2d9ff;
+            margin-bottom: 0.15rem;
+        }
+
+        .sidebar .sub {
+            font-size: 0.75rem;
+            color: #8bb3da;
+            border-left: 3px solid #2d7a9b;
+            padding-left: 0.75rem;
+            margin-bottom: 1.8rem;
+            font-weight: 400;
+        }
+
+        .sidebar nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.7rem 0.9rem;
+            margin: 0.2rem 0;
+            border-radius: 12px;
+            color: #c8dded;
+            text-decoration: none;
+            font-weight: 450;
+            font-size: 0.9rem;
+            transition: all 0.15s;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .sidebar nav a i {
+            width: 1.4rem;
+            font-size: 1rem;
+            color: #5f9bc0;
+        }
+
+        .sidebar nav a:hover {
+            background: #1c314a;
+            color: white;
+            border-color: #2d6a8f;
+        }
+
+        .sidebar nav a.active {
+            background: #1a3b55;
+            color: white;
+            border-color: #3a8bb0;
+            font-weight: 500;
+        }
+
+        .sidebar nav a .badge {
+            background: #1f4a6a;
+            padding: 0.15rem 0.6rem;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: #b2dcff;
+            margin-left: auto;
+        }
+
+        .sidebar .footer-side {
+            margin-top: 2.5rem;
+            font-size: 0.65rem;
+            color: #5e7f9e;
+            border-top: 1px solid #1f3a51;
+            padding-top: 1rem;
+            letter-spacing: 0.3px;
+        }
+
+        .main {
+            margin-left: 280px;
+            padding: 1.8rem 2rem;
+            max-width: calc(100% - 280px);
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.8rem;
+            flex-wrap: wrap;
+        }
+
+        .main-header h2 {
+            font-weight: 600;
+            font-size: 1.7rem;
+            color: #0b1a2e;
+            letter-spacing: -0.02em;
+        }
+
+        .main-header .pill {
+            background: #d3e6f5;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #0b2d48;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 0.9rem 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 30, 50, 0.04);
+            flex: 1 1 100px;
+            border: 1px solid #d6e6f2;
+            min-width: 80px;
+        }
+
+        .stat-card .number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0b2d48;
+        }
+
+        .stat-card .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #3d6885;
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #0b2d48;
+            margin: 1.8rem 0 1rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid #b9d2e5;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-title i {
+            color: #2d7a9b;
+        }
+
+        .section-sub {
+            font-weight: 600;
+            color: #0b2d48;
+            margin: 1.5rem 0 0.8rem 0;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-sub i {
+            color: #2d7a9b;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .card-grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .insight-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.2rem;
+            border: 1px solid #d6e6f2;
+            box-shadow: 0 4px 12px rgba(0, 20, 40, 0.03);
+        }
+
+        .insight-card .title {
+            font-weight: 600;
+            color: #0b2d48;
+            font-size: 0.95rem;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .insight-card .title i {
+            color: #2d7a9b;
+        }
+
+        .insight-card .finding {
+            background: #e8f1f8;
+            padding: 0.5rem 0.8rem;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #05446a;
+            margin: 0.4rem 0;
+        }
+
+        .insight-card .quote {
+            background: #f4f8fc;
+            border-left: 3px solid #2d7a9b;
+            padding: 0.6rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #1f4a6a;
+            margin: 0.4rem 0;
+            font-style: italic;
+        }
+
+        .insight-card .quote strong {
+            color: #0b2d48;
+            font-style: normal;
+        }
+
+        .insight-card .meta {
+            font-size: 0.7rem;
+            color: #4d7a9a;
+            margin-top: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #dcebf5;
+            border-radius: 30px;
+            padding: 0.1rem 0.6rem;
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: #124162;
+            display: inline-block;
+        }
+
+        .tag.alto {
+            background: #c9ddee;
+            color: #003459;
+            font-weight: 600;
+        }
+
+        .tag.medio {
+            background: #dde8f0;
+            color: #1f4a6a;
+        }
+
+        .tag.rojo {
+            background: #f0d8d8;
+            color: #7a2e2e;
+            font-weight: 600;
+        }
+
+        .tag.verde {
+            background: #c5e0d5;
+            color: #0a4a3a;
+        }
+
+        .tag.azul {
+            background: #d4e1eb;
+            color: #1a4a6a;
+        }
+
+        .mini-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            margin: 0.4rem 0;
+        }
+
+        .mini-table td {
+            padding: 0.3rem 0.2rem;
+            border-bottom: 1px solid #e7f0f7;
+        }
+
+        .mini-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight-box {
+            background: #e2eff8;
+            border-radius: 14px;
+            padding: 1rem 1.5rem;
+            margin: 1.2rem 0;
+            border-left: 4px solid #2d7a9b;
+        }
+
+        .highlight-box strong {
+            color: #05446a;
+        }
+
+        .highlight-box ul {
+            margin-left: 1.5rem;
+            margin-top: 0.4rem;
+            color: #1f4a6a;
+            font-size: 0.85rem;
+        }
+
+        .table-wrap {
+            background: white;
+            border-radius: 20px;
+            padding: 0.1rem 0;
+            box-shadow: 0 4px 16px rgba(6, 30, 50, 0.04);
+            border: 1px solid #d2e3ef;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            min-width: 1100px;
+            font-family: 'Inter', 'Montserrat', sans-serif;
+        }
+
+        th {
+            background: #e2eff8;
+            color: #0b2d48;
+            font-weight: 600;
+            padding: 0.7rem 0.6rem;
+            text-align: left;
+            border-bottom: 2px solid #b9d2e5;
+            white-space: nowrap;
+            font-size: 0.65rem;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 0.6rem 0.6rem;
+            border-bottom: 1px solid #e7f0f7;
+            vertical-align: middle;
+            color: #173a52;
+            line-height: 1.3;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.65rem;
+            white-space: nowrap;
+        }
+
+        .badge-status.success {
+            background: #c5e0d5;
+            color: #0a4a3a;
+        }
+
+        .badge-status.partial {
+            background: #d4e1eb;
+            color: #2a5a7a;
+        }
+
+        .badge-status.rechazo {
+            background: #f0d8d8;
+            color: #7a2e2e;
+        }
+
+        .badge-status.no {
+            background: #e8eef3;
+            color: #4d6a7a;
+        }
+
+        .badge-status.critico {
+            background: #e8c8c8;
+            color: #7a1a1a;
+            font-weight: 600;
+        }
+
+        .seccion {
+            display: block;
+        }
+
+        .seccion.oculto {
+            display: none !important;
+        }
+
+        .footer-analisis {
+            background: #0b1a2e;
+            color: #b2d9ff;
+            border-radius: 20px;
+            padding: 1.8rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .footer-analisis .frase {
+            font-size: 1.1rem;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .footer-analisis .frase strong {
+            color: white;
+        }
+
+        .footer-analisis .sub {
+            margin-top: 0.8rem;
+            font-size: 0.75rem;
+            color: #5f9bc0;
+        }
+
+        .rechazo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .rechazo-grid-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .rechazo-item {
+            background: white;
+            border-radius: 12px;
+            padding: 0.8rem;
+            border: 1px solid #d6e6f2;
+            text-align: center;
+        }
+
+        .rechazo-item .count {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0b2d48;
+        }
+
+        .rechazo-item .label {
+            font-size: 0.65rem;
+            color: #3f6b87;
+        }
+
+        .rechazo-item .names {
+            font-size: 0.6rem;
+            color: #1f4a6a;
+            margin-top: 0.2rem;
+        }
+
+        .rechazo-item.danger {
+            background: #fdf6f6;
+            border: 2px solid #c0392b;
+        }
+
+        .rechazo-item.danger .count {
+            color: #7a2e2e;
+        }
+
+        .rechazo-item.danger .label {
+            color: #7a2e2e;
+            font-weight: 600;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ddeaf3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #307197;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                padding: 0.8rem 0.4rem;
+            }
+            .sidebar h1 {
+                font-size: 0.7rem;
+            }
+            .sidebar .sub,
+            .sidebar .footer-side,
+            .sidebar nav a span:not(.badge) {
+                display: none;
+            }
+            .sidebar nav a {
+                justify-content: center;
+                padding: 0.5rem;
+            }
+            .sidebar nav a i {
+                margin: 0;
+                font-size: 1.3rem;
+            }
+            .main {
+                margin-left: 70px;
+                padding: 0.8rem;
+                max-width: calc(100% - 70px);
+            }
+            .stats {
+                flex-direction: column;
+            }
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            .card-grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .rechazo-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            .rechazo-grid-4 {
+                grid-template-columns: 1fr 1fr;
+            }
+            .main-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h1>⎈ CUN</h1>
+        <div class="sub">UX · Customer Experience</div>
+        <nav>
+            <a href="#gestion" class="active"><i class="fas fa-clipboard-list"></i> <span>Gestión completa</span> <span class="badge" style="background:#1a5a7a;">34</span></a>
+            <a href="#bot"><i class="fas fa-robot"></i> <span>Bot</span> <span class="badge">5</span></a>
+            <a href="#pagina"><i class="fas fa-globe"></i> <span>Página</span> <span class="badge">8</span></a>
+        </nav>
+        <div class="footer-side">
+            <i class="fas fa-database"></i> 34 casos · Julio 2026
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- ========================================================== -->
+        <!-- SECCIÓN: GESTIÓN COMPLETA                                   -->
+        <!-- ========================================================== -->
+        <section id="gestion" class="seccion">
+
+            <div class="main-header">
+                <h2>📋 Gestión completa · 34 estudiantes</h2>
+                <div class="pill"><i class="fas fa-calendar-alt"></i> Julio 2026</div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card"><span class="number">34</span><div class="label">Total estudiantes</div></div>
+                <div class="stat-card"><span class="number">8</span><div class="label">Entrevistas completadas</div></div>
+                <div class="stat-card"><span class="number">1</span><div class="label">WhatsApp (info parcial)</div></div>
+                <div class="stat-card"><span class="number">9</span><div class="label">Con información útil</div></div>
+                <div class="stat-card"><span class="number">11</span><div class="label">Rechazos activos</div></div>
+                <div class="stat-card"><span class="number">14</span><div class="label">Sin contacto posible</div></div>
+            </div>
+
+            <div class="section-title"><i class="fas fa-clipboard-list"></i> Gestión detallada · estudiante por estudiante</div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Cédula</th>
+                            <th>Nombre</th>
+                            <th>¿Contestó?</th>
+                            <th>Estado de gestión</th>
+                            <th>Resultado</th>
+                            <th>Información útil</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaGestion">
+                        <!-- JS inyecta -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="display:flex; gap:1.2rem; flex-wrap:wrap; margin-top:1.2rem; font-size:0.7rem; color:#1f4a6a;">
+                <span><span class="badge-status success">●</span> Entrevista completada</span>
+                <span><span class="badge-status partial">●</span> Información parcial</span>
+                <span><span class="badge-status rechazo">●</span> Rechazó / no participó</span>
+                <span><span class="badge-status critico">●</span> Experiencia terrible</span>
+                <span><span class="badge-status no">●</span> Sin contacto / no posible</span>
+            </div>
+
+            <hr>
+
+            <!-- ====== RECHAZOS ====== -->
+            <div class="section-title"><i class="fas fa-phone-slash" style="color:#c0392b;"></i> Rechazos activos: 11 personas</div>
+
+            <div class="rechazo-grid">
+                <div class="rechazo-item">
+                    <div class="count">1</div>
+                    <div class="label">Colgó por grabación</div>
+                    <div class="names">RINCON CASTAÑEDA DANIELA</div>
+                </div>
+                <div class="rechazo-item">
+                    <div class="count">1</div>
+                    <div class="label">Colgó al escuchar "CUN"</div>
+                    <div class="names">VIVAS ORDÓÑEZ JUAN ANDRÉS</div>
+                </div>
+                <div class="rechazo-item">
+                    <div class="count">2</div>
+                    <div class="label">Rechazo múltiple</div>
+                    <div class="names">GARCIA DIAZ SEBASTIAN ANDRES · POLO AYALA EVELIN DE DIOS</div>
+                </div>
+                <div class="rechazo-item danger">
+                    <div class="count">2</div>
+                    <div class="label">Experiencia terrible</div>
+                    <div class="names">BEDOYA RODRÍGUEZ JHONATAN · CUBILLOS SUAREZ JACKLYN JULYETH</div>
+                </div>
+                <div class="rechazo-item">
+                    <div class="count">1</div>
+                    <div class="label">Molesta / no quiso</div>
+                    <div class="names">PULIDO CÁRDENAS CAROL YULIANA</div>
+                </div>
+            </div>
+
+            <div class="rechazo-grid-4">
+                <div class="rechazo-item">
+                    <div class="count">1</div>
+                    <div class="label">Silencio</div>
+                    <div class="names">QUITIAN GUTIERREZ ANGIE TATIANA</div>
+                </div>
+                <div class="rechazo-item">
+                    <div class="count">1</div>
+                    <div class="label">Fuera de servicio</div>
+                    <div class="names">RICO PARADA ADRIANA DEL PILAR</div>
+                </div>
+                <div class="rechazo-item">
+                    <div class="count">1</div>
+                    <div class="label">No disponible</div>
+                    <div class="names">POLO SÁNCHEZ JEYSON DE</div>
+                </div>
+                <div class="rechazo-item">
+                    <div class="count">1</div>
+                    <div class="label">No fue posible</div>
+                    <div class="names">OSSA RESTREPO JUAN DIEGO</div>
+                </div>
+            </div>
+
+            <!-- ====== EXPERIENCIAS TERRIBLES ====== -->
+            <div class="highlight-box" style="border-left-color:#c0392b; background:#fdf6f6;">
+                <strong style="color:#7a2e2e;">🔴 CASOS DE EXPERIENCIA TERRIBLE</strong>
+                <ul>
+                    <li><strong>BEDOYA RODRÍGUEZ JHONATAN:</strong> No contestó. Escribió por WhatsApp: <strong>"no quería saber nada de la CUN porque su experiencia había sido terrible"</strong>. No quiso dar detalles.</li>
+                    <li><strong>CUBILLOS SUAREZ JACKLYN JULYETH:</strong> Contestó. Manifestó que <strong>su experiencia en la CUN había sido muy negativa</strong>, no aceptó grabación ni quiso explicar motivos.</li>
+                </ul>
+                <div style="margin-top:0.6rem; font-size:0.85rem; color:#7a2e2e; font-weight:500;">
+                    ⚠️ 18% de los rechazos · 6% de la muestra total · <strong>casos críticos que requieren seguimiento</strong>
+                </div>
+            </div>
+
+            <!-- ====== CASO ESTUPIÑÁN ====== -->
+            <div class="section-title"><i class="fas fa-user-check" style="color:#2d7a9b;"></i> Caso Estupiñán (madre) · Caso especial</div>
+
+            <div class="card-grid">
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-info-circle"></i> Datos del caso</div>
+                    <table class="mini-table">
+                        <tr><td><strong>Quién respondió</strong></td><td>Lorena (madre)</td></tr>
+                        <tr><td><strong>Relación</strong></td><td>Ella realizó el pago</td></tr>
+                        <tr><td><strong>Experiencia previa</strong></td><td>Ya era estudiante de la CUN</td></tr>
+                        <tr><td><strong>Conocimiento</strong></td><td>Un asesor le enseñó inicialmente</td></tr>
+                        <tr><td><strong>Resultado</strong></td><td>Matriculó a su hijo sin inconvenientes</td></tr>
+                    </table>
+                </div>
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-lightbulb"></i> Análisis</div>
+                    <div class="finding">El "efecto de aprendizaje" es real. Una vez que alguien te enseña, el proceso digital es fácil.</div>
+                    <div class="quote"><strong>Factor clave:</strong> Experiencia previa exitosa</div>
+                    <div class="quote"><strong>Rol del asesor:</strong> Crítico en la primera vez</div>
+                    <div class="meta"><span class="tag alto">Impacto: ALTO</span> El aprendizaje inicial es clave</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Pregunta a responder:</strong> ¿Cómo escalar el "efecto de aprendizaje" para que los estudiantes nuevos tengan la misma confianza que los que ya conocen el proceso?
+            </div>
+
+            <div class="highlight-box" style="margin-top:1.2rem; background:#f4f8fc;">
+                <strong>📌 Resumen de gestión:</strong> Se gestionaron <strong>34 estudiantes</strong>. Se obtuvo información útil de <strong>9 (26%)</strong>:
+                <ul>
+                    <li><strong>8</strong> entrevistas completadas con grabación (TXT)</li>
+                    <li><strong>1</strong> caso WhatsApp: Bedoya informó que su experiencia fue terrible — información parcial</li>
+                </ul>
+                <div style="margin-top:0.5rem; font-size:0.8rem; color:#3d6885;">
+                    <strong>Sin información:</strong> 25 estudiantes (74%) — 11 rechazos activos + 14 sin contacto posible.
+                </div>
+                <div style="margin-top:0.5rem; font-size:0.8rem; color:#3d6885; background:#e2eff8; padding:0.5rem 1rem; border-radius:8px;">
+                    <strong>ℹ️ Nota:</strong> El caso de <strong>Estupiñán (madre)</strong> no está en la tabla porque no fue una llamada de gestión, es un caso especial analizado aquí.
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================== -->
+        <!-- SECCIÓN: BOT                                                -->
+        <!-- ========================================================== -->
+        <section id="bot" class="seccion oculto">
+
+            <div class="main-header">
+                <h2>🤖 Análisis del Bot</h2>
+                <div class="pill"><i class="fas fa-robot"></i> 5 usuarios</div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card"><span class="number">3</span><div class="label">Útil</div></div>
+                <div class="stat-card"><span class="number">2</span><div class="label">No útil</div></div>
+                <div class="stat-card"><span class="number">3</span><div class="label">No lo usaron</div></div>
+            </div>
+
+            <!-- PREGUNTA 1: BOT -->
+            <div class="section-sub"><i class="fas fa-robot" style="color:#2d7a9b;"></i> 1. ¿El bot ayuda o estorba?</div>
+
+            <div class="card-grid">
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-check-circle"></i> Hallazgo principal</div>
+                    <div class="finding">El bot ayuda en información básica, pero falla en preguntas específicas. El usuario termina buscando un humano.</div>
+                    <table class="mini-table">
+                        <tr><td><strong>Útil</strong></td><td>3 personas</td><td>CHARRIS, ROJAS ACOSTA, GUTIERREZ</td></tr>
+                        <tr><td><strong>No útil</strong></td><td>2 personas</td><td>ROJAS BLETRÁN (no respondía), CABEZAS (no lo usó)</td></tr>
+                        <tr><td><strong>No lo usaron</strong></td><td>3 personas</td><td>URREA, CABEZAS, CARDENAS</td></tr>
+                    </table>
+                </div>
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-quote-right"></i> Evidencia textual</div>
+                    <div class="quote"><strong>CHARRIS:</strong> "El bot fue muy claro, pero después tuve problemas porque no aparecía el pago. El bot ya no sabía qué hacer."</div>
+                    <div class="quote"><strong>ROJAS BLETRÁN:</strong> "Le pregunté costos y métodos de pago, pero no había respuesta."</div>
+                    <div class="quote"><strong>ROJAS ACOSTA:</strong> "El bot respondió con detalles."</div>
+                    <div class="meta"><span class="tag alto">Impacto: ALTO</span> El bot insuficiente genera carga operativa</div>
+                </div>
+            </div>
+
+            <div class="card-grid">
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-question-circle"></i> ¿Qué le preguntaron al bot?</div>
+                    <table class="mini-table">
+                        <tr><td><strong>ROJAS BLETRÁN</strong></td><td>Costos de carreras y métodos de pago → <span class="tag rojo">No respondió</span></td></tr>
+                        <tr><td><strong>CHARRIS</strong></td><td>Información general sobre pago → <span class="tag verde">Respondió bien</span></td></tr>
+                        <tr><td><strong>ROJAS ACOSTA</strong></td><td>Dudas sobre el proceso → <span class="tag verde">Respondió con detalle</span></td></tr>
+                        <tr><td><strong>GUTIERREZ</strong></td><td>Información general → <span class="tag verde">Funcionó</span></td></tr>
+                    </table>
+                </div>
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-exclamation-triangle"></i> Problemas detectados</div>
+                    <ul style="margin-left:1.2rem; font-size:0.8rem; color:#1f4a6a; line-height:1.6;">
+                        <li><strong>No responde preguntas específicas</strong> (costos, métodos de pago)</li>
+                        <li><strong>No resuelve problemas operativos</strong> (pago no reflejado)</li>
+                        <li><strong>El usuario se queda sin opciones</strong> y debe contactar a un humano</li>
+                        <li><strong>Genera frustración</strong> cuando no puede avanzar</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Conclusión:</strong> El bot es útil para información general, pero <strong>insuficiente para preguntas específicas y problemas operativos</strong>. Esto deriva a los usuarios a buscar asesores humanos, generando carga operativa y frustración.
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================== -->
+        <!-- SECCIÓN: PÁGINA                                             -->
+        <!-- ========================================================== -->
+        <section id="pagina" class="seccion oculto">
+
+            <div class="main-header">
+                <h2>🌐 Análisis de la Página de pagos</h2>
+                <div class="pill"><i class="fas fa-globe"></i> 8 usuarios</div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card"><span class="number">8</span><div class="label">Usuarios analizados</div></div>
+                <div class="stat-card"><span class="number">1</span><div class="label">Caso especial (madre)</div></div>
+                <div class="stat-card"><span class="number">7</span><div class="label">Con confianza</div></div>
+                <div class="stat-card"><span class="number">1</span><div class="label">Sin confianza</div></div>
+            </div>
+
+            <!-- ====== PREGUNTA 2: CONFIANZA ====== -->
+            <div class="section-sub"><i class="fas fa-shield-alt" style="color:#2d7a9b;"></i> 2. ¿Qué genera confianza para pagar digital?</div>
+
+            <div class="card-grid">
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-key"></i> Hallazgo principal</div>
+                    <div class="finding">La confianza no viene de la plataforma en sí, sino de la marca CUN y las experiencias previas.</div>
+                    <table class="mini-table">
+                        <tr><td><strong>Página oficial de la CUN</strong></td><td>4 personas</td></tr>
+                        <tr><td><strong>Experiencia previa (propia/familiar)</strong></td><td>3 personas</td></tr>
+                        <tr><td><strong>PlaceToPay (plataforma conocida)</strong></td><td>1 persona</td></tr>
+                        <tr><td><strong>No hubo confianza (necesidad)</strong></td><td>1 persona</td></tr>
+                    </table>
+                </div>
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-quote-right"></i> Evidencia textual</div>
+                    <div class="quote"><strong>URREA:</strong> "Es la página oficial de la universidad. Mi hermano pagó primero que yo."</div>
+                    <div class="quote"><strong>CABEZAS:</strong> "No hubo algo que me diera seguridad. Dije: Dios mío, que sea lo que tú quieras."</div>
+                    <div class="quote"><strong>ROJAS ACOSTA:</strong> "Me dirigió a PlaceToPay, siempre ha sido seguro."</div>
+                    <div class="meta"><span class="tag medio">Impacto: MEDIO</span> Confianza anclada en la marca</div>
+                </div>
+            </div>
+
+            <!-- ====== PREGUNTA 3: INCIDENCIAS ====== -->
+            <div class="section-sub"><i class="fas fa-exclamation-circle" style="color:#2d7a9b;"></i> 3. ¿Cuáles son los inconvenientes más frecuentes?</div>
+
+            <div class="card-grid">
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-bug"></i> Hallazgo principal</div>
+                    <div class="finding">El problema no es pagar, es lo que pasa <strong>después</strong> del pago.</div>
+                    <table class="mini-table">
+                        <tr><td><strong>Pago no reflejado</strong></td><td>3</td><td><span class="tag alto">ALTO</span></td></tr>
+                        <tr><td><strong>Precios inconsistentes</strong></td><td>2</td><td><span class="tag alto">ALTO</span></td></tr>
+                        <tr><td><strong>Bot no responde</strong></td><td>2</td><td><span class="tag medio">MEDIO</span></td></tr>
+                        <tr><td><strong>Botón de pago no funciona</strong></td><td>1</td><td><span class="tag medio">MEDIO</span></td></tr>
+                    </table>
+                </div>
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-quote-right"></i> Evidencia textual</div>
+                    <div class="quote"><strong>GUTIÉRREZ:</strong> "Salía que el pago no había sido reflejado, entonces nos salía matrícula."</div>
+                    <div class="quote"><strong>NIETO:</strong> "Tres valores diferentes para el mismo semestre."</div>
+                    <div class="quote"><strong>CABEZAS:</strong> "Me dijeron que era gratis y me cobraron normal."</div>
+                    <div class="meta"><span class="tag alto">Impacto: ALTO</span> Problemas operativos post-pago</div>
+                </div>
+            </div>
+
+            <!-- ====== PREGUNTA 4: ASESOR HUMANO ====== -->
+            <div class="section-sub"><i class="fas fa-user-tie" style="color:#2d7a9b;"></i> 4. ¿El usuario necesita un asesor humano?</div>
+
+            <div class="card-grid">
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-users"></i> Hallazgo principal</div>
+                    <div class="finding">El 60% de los entrevistados necesitó un humano en algún momento.</div>
+                    <table class="mini-table">
+                        <tr><td><strong>Necesitaron asesor</strong></td><td>3 personas</td></tr>
+                        <tr><td><strong>No necesitaron</strong></td><td>2 personas</td></tr>
+                        <tr><td><strong>No mencionado</strong></td><td>3 personas</td></tr>
+                    </table>
+                </div>
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-quote-right"></i> Evidencia textual</div>
+                    <div class="quote"><strong>CHARRIS:</strong> "El bot ya no sabía qué hacer. Me tocó buscar un humano para legalizar la matrícula."</div>
+                    <div class="quote"><strong>CABEZAS:</strong> "El chico que me asesoraba me dijo que ya no trabajaba en la CUN. Yo no tuve asesor."</div>
+                    <div class="meta"><span class="tag alto">Impacto: ALTO</span> El humano es el "plan B"</div>
+                </div>
+            </div>
+
+            <!-- ====== PREGUNTA 5: FACILIDAD DE USO ====== -->
+            <div class="section-sub"><i class="fas fa-star" style="color:#2d7a9b;"></i> 5. ¿Cómo califican la facilidad de uso?</div>
+
+            <div class="card-grid-3">
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-thumbs-up"></i> URREA</div>
+                    <div class="quote">"Es muy sencillo, es intuitivo."</div>
+                </div>
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-thumbs-up"></i> ROJAS BLETRÁN</div>
+                    <div class="quote">"Es intuitivo, fácil, visualmente agradable."</div>
+                </div>
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-thumbs-up"></i> ROJAS ACOSTA</div>
+                    <div class="quote">"Se me hizo bastante sencillo."</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Conclusión:</strong> La plataforma es visualmente atractiva e intuitiva. <strong>La interfaz NO es el problema.</strong>
+            </div>
+
+            <!-- ====== PREGUNTA 6: MEJORAS ====== -->
+            <div class="section-sub"><i class="fas fa-tools" style="color:#2d7a9b;"></i> 6. ¿Qué mejorarían los usuarios?</div>
+
+            <div class="card-grid">
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-list"></i> Mejoras sugeridas</div>
+                    <table class="mini-table">
+                        <tr><td><strong>Precios consistentes</strong></td><td>NIETO</td></tr>
+                        <tr><td><strong>Cumplir lo prometido</strong></td><td>CABEZAS</td></tr>
+                        <tr><td><strong>Reflejo inmediato del pago</strong></td><td>CHARRIS</td></tr>
+                        <tr><td><strong>Bot más capaz</strong></td><td>ROJAS BLETRÁN</td></tr>
+                    </table>
+                </div>
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-quote-right"></i> Evidencia textual</div>
+                    <div class="quote"><strong>NIETO:</strong> "Te liquiden la matrícula en 10 millones, con cosas que no son útiles."</div>
+                    <div class="quote"><strong>CABEZAS:</strong> "Si dicen una cosa, tienen que cumplir con esa palabra."</div>
+                    <div class="meta"><span class="tag alto">Impacto: ALTO</span> Las mejoras son operativas, no de interfaz</div>
+                </div>
+            </div>
+
+            <!-- ====== SÍNTESIS ====== -->
+            <hr>
+
+            <div class="section-title"><i class="fas fa-flag-checkered"></i> Síntesis de la Página</div>
+
+            <div class="card-grid-3">
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-list"></i> Hallazgos clave</div>
+                    <table class="mini-table">
+                        <tr><td>1. Confianza = marca CUN</td><td><span class="tag medio">MEDIO</span></td></tr>
+                        <tr><td>2. Pago no reflejado</td><td><span class="tag alto">ALTO</span></td></tr>
+                        <tr><td>3. Precios inconsistentes</td><td><span class="tag alto">ALTO</span></td></tr>
+                        <tr><td>4. 60% necesita asesor</td><td><span class="tag alto">ALTO</span></td></tr>
+                        <tr><td>5. Interfaz intuitiva</td><td><span class="tag medio">BAJO</span></td></tr>
+                    </table>
+                </div>
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-chart-pie"></i> Distribución</div>
+                    <table class="mini-table">
+                        <tr><td><strong>Con confianza</strong></td><td>7</td><td>88%</td></tr>
+                        <tr><td><strong>Sin confianza</strong></td><td>1</td><td>12%</td></tr>
+                        <tr><td><strong>Necesitaron asesor</strong></td><td>3</td><td>60%</td></tr>
+                        <tr><td><strong>Califican interfaz como fácil</strong></td><td>3</td><td>100%</td></tr>
+                    </table>
+                </div>
+                <div class="insight-card">
+                    <div class="title"><i class="fas fa-crosshairs"></i> Las 3 preguntas que importan</div>
+                    <div style="margin-bottom:0.6rem; font-weight:600; color:#0b2d48; font-size:0.85rem;">1. ¿Por qué el pago no se refleja automáticamente?</div>
+                    <div style="font-size:0.8rem; color:#1f4a6a; margin-bottom:0.6rem;">Impide matrícula, genera estrés, obliga a contactar humano.</div>
+                    <div style="margin-bottom:0.6rem; font-weight:600; color:#0b2d48; font-size:0.85rem;">2. ¿Por qué hay precios inconsistentes?</div>
+                    <div style="font-size:0.8rem; color:#1f4a6a; margin-bottom:0.6rem;">Destruye la confianza, genera reclamos.</div>
+                    <div style="margin-bottom:0.6rem; font-weight:600; color:#0b2d48; font-size:0.85rem;">3. ¿Por qué la confianza está en la marca y no en la plataforma?</div>
+                    <div style="font-size:0.8rem; color:#1f4a6a;">La plataforma no genera confianza por sí misma.</div>
+                </div>
+            </div>
+
+            <div class="footer-analisis">
+                <div class="frase">
+                    "El problema no es la interfaz. <br>
+                    <strong>El problema es lo que pasa después del pago."</strong>
+                </div>
+                <div class="sub">34 casos analizados + 1 caso especial (madre) · 10 con información útil · Julio 2026</div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        // ================================================================
+        // DATOS DE GESTIÓN (34 estudiantes - SIN ESTUPIÑÁN)
+        // ================================================================
+        const gestionData = [
+            { num: 1, cedula: "22956522", nombre: "CARDENAS BELENO NEVIS MARIA", contesto: "Sí", estado: "Entrevista completada", resultado: "Información recolectada", util: "Sí", badge: "success" },
+            { num: 2, cedula: "57280994", nombre: "CHARRIS CHARRIS LUZ MARINA", contesto: "Sí", estado: "Entrevista completada", resultado: "Información recolectada", util: "Sí", badge: "success" },
+            { num: 3, cedula: "1013104971", nombre: "URREA PINEDA ZULY LISETH", contesto: "Sí", estado: "Entrevista completada", resultado: "Información recolectada", util: "Sí", badge: "success" },
+            { num: 4, cedula: "1015479626", nombre: "GUTIERREZ RODRIGUEZ JULIETH", contesto: "Sí", estado: "Entrevista completada", resultado: "Información recolectada", util: "Sí", badge: "success" },
+            { num: 5, cedula: "1022424807", nombre: "ROJAS BLETRAN IVONNE CAMILA", contesto: "Sí", estado: "Entrevista completada", resultado: "Información recolectada", util: "Sí", badge: "success" },
+            { num: 6, cedula: "1033726602", nombre: "ROJAS ACOSTA CRISTOPHER THOMAS", contesto: "Sí", estado: "Entrevista completada", resultado: "Información recolectada", util: "Sí", badge: "success" },
+            { num: 7, cedula: "1087130467", nombre: "CABEZAS BESERRA JEANINE ARMIND", contesto: "Sí", estado: "Entrevista completada", resultado: "Información recolectada", util: "Sí", badge: "success" },
+            { num: 8, cedula: "1128440504", nombre: "NIETO VALENCIA CLAUDIA PAOLA", contesto: "Sí", estado: "Entrevista completada", resultado: "Información recolectada", util: "Sí", badge: "success" },
+            { num: 9, cedula: "1053826236", nombre: "BEDOYA RODRÍGUEZ JHONATAN", contesto: "No", estado: "WhatsApp: experiencia terrible", resultado: "Información parcial (rechazo)", util: "Sí (parcial)", badge: "critico" },
+            { num: 10, cedula: "1036949678", nombre: "GARCIA DIAZ SEBASTIAN ANDRES", contesto: "No", estado: "Múltiples intentos, rechazó", resultado: "Sin información", util: "No", badge: "rechazo" },
+            { num: 11, cedula: "1105391911", nombre: "POLO AYALA EVELIN DE DIOS", contesto: "No", estado: "Múltiples intentos, NO INSISTIR", resultado: "Sin información", util: "No", badge: "rechazo" },
+            { num: 12, cedula: "1000365239", nombre: "RINCON CASTAÑEDA DANIELA", contesto: "Sí", estado: "Colgó al saber que era grabada", resultado: "Sin información", util: "No", badge: "rechazo" },
+            { num: 13, cedula: "1110447784", nombre: "CUBILLOS SUAREZ JACKLYN JULYETH", contesto: "Sí", estado: "Experiencia terrible, no aceptó grabación", resultado: "Sin información", util: "No", badge: "critico" },
+            { num: 14, cedula: "1085322898", nombre: "VIVAS ORDÓÑEZ JUAN ANDRÉS", contesto: "Sí", estado: "Colgó al escuchar 'CUN'", resultado: "Sin información", util: "No", badge: "rechazo" },
+            { num: 15, cedula: "1007161279", nombre: "PULIDO CÁRDENAS CAROL YULIANA", contesto: "Sí", estado: "Molesta, no quiso responder", resultado: "Sin información", util: "No", badge: "rechazo" },
+            { num: 16, cedula: "1007185293", nombre: "QUITIAN GUTIERREZ ANGIE TATIANA", contesto: "Sí", estado: "Contestó dos veces, silencio", resultado: "Sin información", util: "No", badge: "rechazo" },
+            { num: 17, cedula: "1121948524", nombre: "RICO PARADA ADRIANA DEL PILAR", contesto: "No", estado: "Número fuera de servicio", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 18, cedula: "1123620505", nombre: "POLO SÁNCHEZ JEYSON DE", contesto: "No", estado: "Persona no disponible", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 19, cedula: "11511145", nombre: "OSSA RESTREPO JUAN DIEGO", contesto: "No", estado: "No fue posible realizar entrevista", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 20, cedula: "1059910356", nombre: "MENESES CALVACHE JOSÉ FERNANDO", contesto: "No", estado: "No fue posible completar", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 21, cedula: "1013119844", nombre: "GUZMAN PIRAQUIVE LEONARDO", contesto: "No", estado: "No contestó la llamada", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 22, cedula: "1120027003", nombre: "VERA SUAREZ VANESSA MAYLEN", contesto: "No", estado: "No fue posible completar", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 23, cedula: "1081421714", nombre: "VALENCIA TRUJILLO JUAN PABLO", contesto: "No", estado: "No fue posible completar", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 24, cedula: "24338689", nombre: "QUINTERO JIMÉNEZ YENY MARITZA", contesto: "No", estado: "No contestó las llamadas", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 25, cedula: "1030587318", nombre: "ANGULO ANGULO JHONY ALEXANDER", contesto: "No", estado: "No fue posible completar", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 26, cedula: "1014287945", nombre: "GUERRA ACERO ANDRÉS FELIPE", contesto: "No", estado: "No fue posible completar", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 27, cedula: "124347592", nombre: "CRUZ AMAYA LUIS ANDRES", contesto: "No", estado: "Sin registro de gestión", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 28, cedula: "124261652", nombre: "GUTIERREZ RODRIGUEZ JULIETH (dup)", contesto: "No", estado: "Sin registro de gestión", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 29, cedula: "123939782", nombre: "URREA PINEDA ZULY LISETH (dup)", contesto: "No", estado: "Sin registro de gestión", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 30, cedula: "123924371", nombre: "RAMIREZ OCAMPO DIANA CAROLINA", contesto: "No", estado: "Sin registro de gestión", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 31, cedula: "123905096", nombre: "CORONADO PÉREZ JOSE JOAQUÍN", contesto: "No", estado: "Sin registro de gestión", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 32, cedula: "123718450", nombre: "SANCHEZ MARTINEZ MANUEL ALEJANDRO", contesto: "No", estado: "Sin registro de gestión", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 33, cedula: "123281881", nombre: "GARCIA DIAZ SEBASTIAN ANDRES (dup)", contesto: "No", estado: "Sin registro de gestión", resultado: "Sin información", util: "No", badge: "no" },
+            { num: 34, cedula: "123069243", nombre: "POLO AYALA EVELIN DE DIOS (dup)", contesto: "No", estado: "Sin registro de gestión", resultado: "Sin información", util: "No", badge: "no" }
+        ];
+
+        // Renderizar tabla
+        const tbody = document.getElementById('tablaGestion');
+
+        gestionData.forEach(d => {
+            const tr = document.createElement('tr');
+
+            let utilClass = 'tag';
+            if (d.util === 'Sí') utilClass = 'tag verde';
+            else if (d.util === 'Sí (parcial)') utilClass = 'tag azul';
+            else utilClass = 'tag';
+
+            tr.innerHTML = `
+                    <td style="font-weight:500; color:#0b2d48;">${d.num}</td>
+                    <td style="font-family:monospace; font-size:0.7rem;">${d.cedula}</td>
+                    <td style="font-weight:500; font-size:0.75rem;">${d.nombre}</td>
+                    <td><span class="badge-status ${d.badge}">${d.contesto}</span></td>
+                    <td style="font-size:0.7rem;">${d.estado}</td>
+                    <td style="font-size:0.7rem;">${d.resultado}</td>
+                    <td><span class="${utilClass}">${d.util}</span></td>
+                `;
+
+            tbody.appendChild(tr);
+        });
+
+        // ================================================================
+        // NAVEGACIÓN
+        // ================================================================
+        const links = document.querySelectorAll('.sidebar nav a');
+        const secciones = document.querySelectorAll('.seccion');
+
+        function mostrarSeccion(id) {
+            secciones.forEach(sec => sec.classList.add('oculto'));
+            const target = document.getElementById(id);
+            if (target) target.classList.remove('oculto');
+
+            links.forEach(link => link.classList.remove('active'));
+            const activeLink = document.querySelector(`.sidebar nav a[href="#${id}"]`);
+            if (activeLink) activeLink.classList.add('active');
+        }
+
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    const id = href.substring(1);
+                    mostrarSeccion(id);
+                    if (history.pushState) history.pushState(null, null, href);
+                }
+            });
+        });
+
+        window.addEventListener('load', function() {
+            let hash = window.location.hash;
+            if (hash && hash.startsWith('#')) {
+                const id = hash.substring(1);
+                mostrarSeccion(id);
+            } else {
+                mostrarSeccion('gestion');
+                window.location.hash = '#gestion';
+            }
+        });
+
+        window.addEventListener('hashchange', function() {
+            let hash = window.location.hash;
+            if (hash && hash.startsWith('#')) {
+                const id = hash.substring(1);
+                mostrarSeccion(id);
+            }
+        });
+    </script>
+
+</body>
+</html>
